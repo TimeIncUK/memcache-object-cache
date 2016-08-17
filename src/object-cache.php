@@ -113,14 +113,6 @@ function wp_cache_set($key, $data, $group = '', $expire = 0) {
 	global $wp_object_cache;
 
 	if ( defined( 'WP_INSTALLING' ) == false ) {
-		if ( 'notoptions' === $key && 'options' === $group && is_array( $data ) ) {
-			if ( array_key_exists( 'home', $data ) ) {
-				unset( $data['home'] );
-			}
-			if ( array_key_exists( 'siteurl', $data ) ) {
-				unset( $data['siteurl'] );
-			}
-		}
 		return $wp_object_cache->set( $key, $data, $group, $expire );
 	} else {
 		return $wp_object_cache->delete( $key, $group );
