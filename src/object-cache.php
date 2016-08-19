@@ -119,7 +119,7 @@ function wp_cache_set($key, $data, $group = '', $expire = 0) {
 				error_log( 'Tried to set home in notoptions, but we prevented it.' ); 
 			}
 			if ( array_key_exists( 'siteurl', $data ) ) {
-				unset( $data['siteurl'] );i
+				unset( $data['siteurl'] );
 				error_log( 'Tried to set siteurl in notoptions, but we prevented it.' );
 			}
 		}
