@@ -116,9 +116,11 @@ function wp_cache_set($key, $data, $group = '', $expire = 0) {
 		if ( 'notoptions' === $key && 'options' === $group && is_array( $data ) ) {
 			if ( array_key_exists( 'home', $data ) ) {
 				unset( $data['home'] );
+				error_log( 'Tried to set home in notoptions, but we prevented it.' ); 
 			}
 			if ( array_key_exists( 'siteurl', $data ) ) {
-				unset( $data['siteurl'] );
+				unset( $data['siteurl'] );i
+				error_log( 'Tried to set siteurl in notoptions, but we prevented it.' );
 			}
 		}
 		return $wp_object_cache->set( $key, $data, $group, $expire );
