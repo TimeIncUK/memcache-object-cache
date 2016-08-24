@@ -116,10 +116,16 @@ function wp_cache_set($key, $data, $group = '', $expire = 0) {
 		if ( 'notoptions' === $key && 'options' === $group && is_array( $data ) ) {
 			if ( array_key_exists( 'home', $data ) ) {
 				unset( $data['home'] );
+				if ( extension_loaded( 'newrelic' ) ) {
+					newrelic_notice_error( 'Illegal notoptions set for home' );
+				}
 				error_log( 'Tried to set home in notoptions, but we prevented it.' ); 
 			}
 			if ( array_key_exists( 'siteurl', $data ) ) {
 				unset( $data['siteurl'] );
+				if ( extension_loaded( 'newrelic' ) ) {
+					newrelic_notice_error( 'Illegal notoptions set for siteurl' );
+				}
 				error_log( 'Tried to set siteurl in notoptions, but we prevented it.' );
 			}
 		}
@@ -563,6 +569,9 @@ class WP_Object_Cache {
 
 	function failure_callback( $host, $port ) {
 		if ( WP_MEMCACHE_DISABLE_LOGGING ) {
+			if ( extension_loaded( 'newrelic' ) ) {
+				newrelic_notice_error( "Memcache Connection failure for $host:$port" );
+			}
 			error_log( "Memcache Connection failure for $host:$port\n" );
 		}
 	}
