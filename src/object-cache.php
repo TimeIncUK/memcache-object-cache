@@ -115,18 +115,20 @@ function wp_cache_set($key, $data, $group = '', $expire = 0) {
 	if ( defined( 'WP_INSTALLING' ) == false ) {
 		if ( 'notoptions' === $key && 'options' === $group && is_array( $data ) ) {
 			if ( array_key_exists( 'home', $data ) ) {
-				unset( $data['home'] );
+				//unset( $data['home'] );
 				if ( extension_loaded( 'newrelic' ) ) {
 					newrelic_notice_error( 'Illegal notoptions set for home' );
 				}
-				error_log( 'Tried to set home in notoptions, but we prevented it.' ); 
+				error_log( 'Tried to set home in notoptions, but we prevented it.' );
+				return true;
 			}
 			if ( array_key_exists( 'siteurl', $data ) ) {
-				unset( $data['siteurl'] );
+				//unset( $data['siteurl'] );
 				if ( extension_loaded( 'newrelic' ) ) {
 					newrelic_notice_error( 'Illegal notoptions set for siteurl' );
 				}
 				error_log( 'Tried to set siteurl in notoptions, but we prevented it.' );
+				return true;
 			}
 		}
 		return $wp_object_cache->set( $key, $data, $group, $expire );
