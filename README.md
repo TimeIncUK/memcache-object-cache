@@ -22,3 +22,12 @@ $memcached_servers = array(
 	)
 );
 ```
+
+## How to run tests locally
+
+```
+cd {memcache-object-cache folder}
+composer install
+bin/install-wp-tests.sh wordpress_test root root wp-rwdbhost latest
+vendor/bin/phpunit
+```
