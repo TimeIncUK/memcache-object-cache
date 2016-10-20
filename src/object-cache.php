@@ -97,10 +97,12 @@ function wp_cache_get_multi($groups, $force = false) {
 	return $wp_object_cache->get_multi($groups, $force);
 }
 
-function wp_cache_init() {
-	global $wp_object_cache;
+if ( defined( 'WP_IGNORE_OBJECT_CACHE_INIT' ) === false || WP_IGNORE_OBJECT_CACHE_INIT === false ) {
+    function wp_cache_init() {
+        global $wp_object_cache;
 
-	$wp_object_cache = new WP_Object_Cache();
+        $wp_object_cache = new WP_Object_Cache();
+    }
 }
 
 function wp_cache_replace($key, $data, $group = '', $expire = 0) {
