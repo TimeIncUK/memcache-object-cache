@@ -110,4 +110,21 @@ class MemcachedUnitTestsSiteKey extends MemcachedUnitTests {
 		$this->assertWPError( $this->object_cache->set( array() ) );
 		$this->assertWPError( $this->object_cache->set( new WP_Http ) );
 	}
+
+	public function test_short_cache_time() {
+		$cache_key = 'test_cache_time';
+
+		// test setting
+		$this->object_cache->set( $cache_key, 'wibble', 'default', 1);
+		$this->assertEquals( 'wibble', $this->object_cache->get( $cache_key ) );
+
+		// test flushing keeps item in memcache
+		$this->object_cache->flush_local();
+		$this->assertEquals( 'wibble', $this->object_cache->get( $cache_key ) );
+		$this->object_cache->flush_local();
+
+		// test expiry of item from memcache
+		sleep(2);
+		$this->assertFalse( $this->object_cache->get( $cache_key ) );
+	}
 }
